@@ -470,9 +470,9 @@ class Game {
                 y += 9;
                 x = 8;
             } else {
+                x += 9;
                 this.#draw.preset(x, y);
                 this.#draw.drawText(char);
-                x += 9; // Assuming fixed width
             }
         }
 
