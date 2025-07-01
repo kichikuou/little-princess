@@ -119,8 +119,8 @@ class Game {
      * @private
      */
     handleKeyDown(e) {
-        e.preventDefault();
         if (e.ctrlKey && (e.key === 'c' || e.key === 'C')) {
+            e.preventDefault();
             this.handleCtrlC();
             return;
         }
@@ -129,16 +129,20 @@ class Game {
             case 'F1':
             case 'F3':
             case 'F5':
+                e.preventDefault();
                 this.#keyBuffer = e.key.toLowerCase();
                 break;
             case 'Backspace':
+                e.preventDefault();
                 this.#keyBuffer = '\b'; // Use backspace character
                 break;
             case 'Enter':
+                e.preventDefault();
                 this.#keyBuffer = '\r'; // Use carriage return
                 break;
             default:
                 if (e.key.length === 1 && (e.key.match(/[a-z0-9\s-]/i))) {
+                    e.preventDefault();
                     this.#keyBuffer = e.key;
                 }
                 break;
