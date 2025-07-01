@@ -26,7 +26,18 @@ PACKAGE_SOURCE="$TEMP_DIR/$ROOT_DIR"
 mkdir -p "$PACKAGE_SOURCE"
 
 # Copy all files to the temporary directory, excluding specified files
-rsync -av --progress . "$PACKAGE_SOURCE" --exclude ".git" --exclude ".gitignore" --exclude "setup.py" --exclude "package.sh" --exclude "$OUTPUT_ZIP" --exclude "$TEMP_DIR"
+echo "Copying files to temporary directory..."
+for item in *; do
+    case "$item" in
+        "setup.py"|"package.sh"|"$OUTPUT_ZIP"|"$TEMP_DIR")
+            # Skip these files/directories
+            ;;
+        *)
+            # Copy everything else
+            cp -r "$item" "$PACKAGE_SOURCE/"
+            ;;
+    esac
+done
 
 # Go to the temporary directory to create the zip file
 cd "$TEMP_DIR"

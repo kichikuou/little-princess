@@ -1,6 +1,5 @@
-
 import os
-import requests
+import urllib.request
 import zipfile
 import io
 
@@ -15,11 +14,13 @@ os.makedirs(cg_dir, exist_ok=True)
 
 print(f"Downloading {url}...")
 try:
-    response = requests.get(url)
-    response.raise_for_status()  # Raise an exception for bad status codes
+    with urllib.request.urlopen(url) as response:
+        if response.status != 200:
+            raise Exception(f"HTTP Error {response.status}: {response.reason}")
+        content = response.read()
 
     print("Extracting files...")
-    with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+    with zipfile.ZipFile(io.BytesIO(content)) as z:
         for member in z.infolist():
             # Check if the file is in the lp32/cg/ directory and is a .gif file
             if member.filename.lower().startswith("lp32/cg/") and member.filename.lower().endswith(".gif"):
@@ -31,10 +32,9 @@ try:
 
     print("Setup complete.")
 
-except requests.exceptions.RequestException as e:
-    print(f"Error downloading the file: {e}")
+except urllib.error.URLError as e:
+    print(f"Error downloading the file: {e.reason}")
 except zipfile.BadZipFile:
     print("Error: The downloaded file is not a valid zip file.")
 except Exception as e:
     print(f"An unexpected error occurred: {e}")
-
