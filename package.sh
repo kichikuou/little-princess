@@ -29,7 +29,7 @@ mkdir -p "$PACKAGE_SOURCE"
 echo "Copying files to temporary directory..."
 for item in *; do
     case "$item" in
-        "setup.py"|"package.sh"|"$OUTPUT_ZIP"|"$TEMP_DIR")
+        "README.md"|"setup.py"|"package.sh"|"$OUTPUT_ZIP"|"$TEMP_DIR")
             # Skip these files/directories
             ;;
         *)
