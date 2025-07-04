@@ -15,9 +15,20 @@
             margin: 0;
         }
 
+        /* Scale the 512x424 canvas ~1.14 times horizontally. This reproduces
+           the appearance of MSX NTSC output on a 4:3 monitor. */
         #container {
             width: 582px;
             height: 424px;
+        }
+
+        /* On lower resolution displays, further enlarge the canvas by 1.25x.
+           This greatly reduces moire caused by the pixel aspect ratio change. */
+        @media (max-resolution: 1.24dppx) {
+            #container {
+                width: 728px;
+                height: 530px;
+            }
         }
 
         canvas {

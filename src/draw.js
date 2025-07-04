@@ -53,6 +53,7 @@ class Draw {
         if (!ctx) {
             throw new Error('Failed to get 2D context from canvas.');
         }
+        ctx.imageSmoothingEnabled = false;
         this.#ctx = ctx;
     }
 
